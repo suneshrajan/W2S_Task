@@ -8,12 +8,12 @@ from . models import *
 admin.site.register(SkillCv)
 # admin.site.register(UserSkills)
 
-class EmployeeTaskPercentage(admin.ModelAdmin):
+class EmployeeTaskAdmin(admin.ModelAdmin):
     list_display = ('user', 'skill', 'percentage')
-    list_filter = ('skill', 'percentage')
+    list_filter = ('user', )
     save_as = True
     save_on_top = True
-    change_list_template = 'change_list_graph.html'
+    change_list_template = 'task/change_list_graph.html'
 
 
-admin.site.register(UserSkills, EmployeeTaskPercentage)
+admin.site.register(UserSkills, EmployeeTaskAdmin)

@@ -1,52 +1,64 @@
 
 {% extends "admin/change_list.html" %}
 {% load static %}
+{% csrf_token %}
 
 {% block extrahead %}
 {{ block.super }}
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    
+
     <script>
+
+        {% regroup cl.queryset by get_user_display as user_list %}
+  
+
+        function randomColorFun() {
+            return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+        }
+
+        var options = {
+            responsive: true,
+            maintainAspectRatio: true,
+            legend: {
+                position: 'left'
+            },
+            title: {
+                display: true
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        };
+
+
         document.addEventListener('DOMContentLoaded', () => {
-            var doc = document.getElementById('myChart')
 
             const ctx = document.getElementById('myChart').getContext('2d');
             
+            var clr_count = [{% for user in user_list %}randomColorFun(),{% endfor %}]
+
+            var color_list = []
+            
+            for(var i of clr_count) {
+                color_list.push(randomColorFun());
+            }
+
             const myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: [{% for user in user_list %}'{{ user.grouper }}',{% endfor %}],
                     datasets: [{
                         label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        data: [{% for user in user_list %}'{{ user.list|length }}',{% endfor %}],
+                        backgroundColor: color_list,
+                        borderColor: color_list,
                         borderWidth: 1
                     }]
                 },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
+                options: options
             });
         });
         
@@ -54,6 +66,13 @@
 {% endblock %}
 
 {% block content %}
+    {% regroup User by first_name as user_list %}
+    {% for i in user_list %}
+        <h1>{{i}}</h1>
+    {% endfor %}
+
+
+
     <div class="row">
         <div class="col-sm-4">
             <canvas id="myChart" style="width: 200px !important;"></canvas>

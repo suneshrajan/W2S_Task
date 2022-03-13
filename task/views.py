@@ -3,9 +3,9 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-def say_hi(request) :
-    print("hi")
-    context = {
-        "name": "Sunesh Rajan",
-    }
-    return render(request, "index.html", context)
+
+def home(request):
+	return render(request, 'task/dashboard.html')
+
+def employee(request):
+	return render(request, 'task/employee.html')

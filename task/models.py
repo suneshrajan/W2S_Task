@@ -34,7 +34,7 @@ class SkillCv(models.Model):
 
 class UserSkills(models.Model):
     user = models.ForeignKey(User, related_name="registred_user", on_delete=models.CASCADE)
-    skill = models.OneToOneField(SkillCv, related_name="skill_cv", on_delete=models.CASCADE)
+    skill = models.ForeignKey(SkillCv, related_name="skill_cv", on_delete=models.CASCADE)
     percentage = models.PositiveIntegerField()
     time_created = models.DateTimeField(auto_now_add=True)
     time_modified = models.DateTimeField(auto_now=True)
