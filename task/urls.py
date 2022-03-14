@@ -5,5 +5,5 @@ from django.urls import path
 
 urlpatterns = [
     path('', views.home, name="home"),
-    path('employee/', views.employee, name="employee")
+    path('employee/<str:user_id>/', views.employee)
 ]

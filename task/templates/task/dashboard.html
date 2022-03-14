@@ -3,40 +3,47 @@
 
 {% block content %}
 
+{%  include 'task/status.html' %}
+
 <div class="row">
-	<div class="col-md-5">
-		<h5>CUSTOMERS:</h5>
+	<div class="col-md-8">
+		<h5>Employee & Skills:</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create Customer</a>
+			<!-- <a class="btn btn-primary  btn-sm btn-block" href="">Create Employee</a> -->
 			<table class="table table-sm">
 				<tr>
 					<th></th>
-					<th>Customer</th>
-					<th>Orders</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>email</th>
+					{% for skill in skills %}
+							<th>{{skill.name}}</th>
+					{% endfor %}
+					<th>Last Loggedin</th>
+					<th>view</th>
 				</tr>
+
+				{% for key,values in users_with_skills.items %}
+					<tr>
+						<td></td>
+						<td>{{values.0.first_name}}</td>
+						<td>{{values.0.last_name}}</td>
+						<td>{{values.0.email_name}}</td>
+						
+						{% for value in values %}
+							<td>{{value.percentage}}</td>
+						{% endfor %}
+
+						<td>{{values.0.last_loggedin}}</td>
+						<td><a class="btn btn-primary  btn-sm btn-block" href=""> View </a></td>
+					</tr>
+				{% endfor %}
 
 			</table>
 		</div>
 	</div>
 
-	<div class="col-md-7">
-		<h5>LAST 5 ORDERS</h5>
-		<hr>
-		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create Order</a>
-			<table class="table table-sm">
-				<tr>
-					<th>Product</th>
-					<th>Date Orderd</th>
-					<th>Status</th>
-					<th>Update</th>
-					<th>Remove</th>
-				</tr>
-		
-			</table>
-		</div>
-	</div>
 
 </div>
 
