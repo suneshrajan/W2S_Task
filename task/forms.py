@@ -10,15 +10,17 @@ class SkillsForm(ModelForm):
         model = SkillCv
         fields = '__all__'
 
-class UserForm(ModelForm):
+class UserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+        fields = ['first_name', 'last_name', 'email', 'username']
+
 
 class UserSkillForm(ModelForm):
     class Meta:
         model = UserSkills
         fields = ['skill', 'percentage']
+
 
 class CreateUserForm(UserCreationForm):
     class Meta:

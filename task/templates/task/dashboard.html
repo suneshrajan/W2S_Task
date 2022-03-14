@@ -19,7 +19,7 @@
 					{% for skill in skills %}
 							<th>{{skill.name}}</th>
 					{% endfor %}
-					<th>Last Loggedin</th>
+					<th>Last Login</th>
 					<th> </th>
 				</tr>
 
@@ -33,7 +33,7 @@
 							<td>{{value.percentage}}</td>
 						{% endfor %}
 
-						<td>{{values.0.last_loggedin}}</td>
+						<td>{{values.0.last_login}}</td>
 						<td><a class="btn btn-info" href="{% url 'employee' values.0.user_id %}">View</a></td>
 					</tr>
 				{% endfor %}

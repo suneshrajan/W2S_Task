@@ -73,9 +73,9 @@ def home(request):
 	
 	group_name = User.objects.filter(id=request.user.id).values_list('groups__name',flat=True)[0]
 	if group_name == 'Employee':
-		user_skill_df = pd.DataFrame(list(UserSkills.objects.filter(user_id=request.user.id).values_list('user_id', 'user__first_name', 'user__last_name', 'user__email', 'user__last_login', 'skill__name', 'percentage')), columns=['user_id', 'first_name', 'last_name', 'email', 'last_loggedin', 'skill', 'percentage']).fillna('')
+		user_skill_df = pd.DataFrame(list(UserSkills.objects.filter(user_id=request.user.id).values_list('user_id', 'user__first_name', 'user__last_name', 'user__email', 'user__last_login', 'skill__name', 'percentage')), columns=['user_id', 'first_name', 'last_name', 'email', 'last_login', 'skill', 'percentage']).fillna('')
 	else:
-		user_skill_df = pd.DataFrame(list(UserSkills.objects.filter(user__groups__name="Employee").values_list('user_id', 'user__first_name', 'user__last_name', 'user__email', 'user__last_login', 'skill__name', 'percentage')), columns=['user_id', 'first_name', 'last_name', 'email', 'last_loggedin', 'skill', 'percentage']).fillna('')
+		user_skill_df = pd.DataFrame(list(UserSkills.objects.filter(user__groups__name="Employee").values_list('user_id', 'user__first_name', 'user__last_name', 'user__email', 'user__last_login', 'skill__name', 'percentage')), columns=['user_id', 'first_name', 'last_name', 'email', 'last_login', 'skill', 'percentage']).fillna('')
 
 	
 	users_with_skills = user_skill_df.groupby('user_id').apply(lambda x:x.to_dict('r')).to_dict()
@@ -165,13 +165,16 @@ def create_employee(request):
 				user = form.cleaned_data.get('username')
 				
 				user_obj = User.objects.get(username=user)
+				user_obj.last_login = datetime.datetime.now()
+				user_obj.save()
+				
 				group = Group.objects.get(name='Employee')
 				user_obj.groups.add(group)
 
 				for skill in SkillCv.objects.all():
 					UserSkills.objects.create(user=user_obj, skill=skill, percentage=0)
 			else:
-				print("Skill Already Exists !")
+				print("User Already Exists !")
 			return redirect('/')
 
 	context = {'form': form}
