@@ -5,15 +5,14 @@
 
 {%  include 'task/status.html' %}
 
-<div class="row">
+<div class="row" style="padding: 1%;">
 	<div class="col-md-8">
-		<h5>Employee & Skills:</h5>
-		<hr>
+		
 		<div class="card card-body">
-			<!-- <a class="btn btn-primary  btn-sm btn-block" href="">Create Employee</a> -->
+			<h5>Employee & Skills:</h5>
+			<br>
 			<table class="table table-sm">
 				<tr>
-					<th></th>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>email</th>
@@ -21,27 +20,59 @@
 							<th>{{skill.name}}</th>
 					{% endfor %}
 					<th>Last Loggedin</th>
-					<th>view</th>
+					<th> </th>
 				</tr>
 
 				{% for key,values in users_with_skills.items %}
 					<tr>
-						<td></td>
 						<td>{{values.0.first_name}}</td>
 						<td>{{values.0.last_name}}</td>
-						<td>{{values.0.email_name}}</td>
+						<td>{{values.0.email}}</td>
 						
 						{% for value in values %}
 							<td>{{value.percentage}}</td>
 						{% endfor %}
 
 						<td>{{values.0.last_loggedin}}</td>
-						<td><a class="btn btn-primary  btn-sm btn-block" href=""> View </a></td>
+						<td><a class="btn btn-info" href="{% url 'employee' values.0.user_id %}">View</a></td>
 					</tr>
 				{% endfor %}
 
 			</table>
 		</div>
+	</div>
+	<div class="col-md-4">
+		{% if group_name != 'Employee' %}
+		
+		<div class="card card-body">
+			<h5> Create Employee & Skills:</h5>
+			<hr>
+			<a class="btn btn-outline-success  btn-sm btn-block" href="{% url 'create_employee' %}">Create Employee</a>
+			<a class="btn btn-outline-success  btn-sm btn-block" href="{% url 'create_skills' %}">Create Employee Skills</a>
+		</div>
+		<br>
+		<div class="card card-body">
+			<h5> View & Update Skills </h5>
+			<br>
+			<table class="table table-sm">
+				<tr>
+					<th>Skill</th>
+					<th>Update</th>
+					<th>Delete</th>
+				</tr>
+
+				{% for skill in skills %}
+					<tr>
+						<td>{{skill.name}}</td>
+						<td><a class="btn btn-info" href="{% url 'update_skills' skill.id %}">Update</a></td>
+						<td><a class="btn btn-danger" href="{% url 'delete_skills' skill.id %}">Delete</a></td>
+					</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+		{% endif %}
+
 	</div>
 
 

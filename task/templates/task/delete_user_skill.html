@@ -1,0 +1,26 @@
+{%  extends 'task/main.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+
+            <p>Are you sure, you want to delete "{{user_skill.skill.name}}" for this user "{{user_skill.user.username}}"?</p>
+
+            <form action="{% url 'delete_employee_skill' user_skill.id %}" method="POST">
+                {% csrf_token %}
+
+                <a class="btn btn-warning" href="{% url 'employee' user_skill.user_id %}">Cancel</a>
+                <input class="btn btn-danger" type="submit" name="Confirm">
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

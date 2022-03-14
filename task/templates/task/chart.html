@@ -1,0 +1,97 @@
+{% load static %}
+
+{% block content %}
+
+<br>
+
+<div class="row" style="padding: 1%;">
+
+	<div class="col-md">
+            <canvas id="myChart" style="width: 200px !important;"></canvas>
+	</div>
+
+	<div class="col-md-4">
+		<div class="card card-body">
+			<h5>Employee Information</h5>
+			<hr>
+            <p>Username: <b>{{employee.username}}</b></p>
+			<p>Name: <b>{{employee.first_name}} - {{employee.last_name}}</b> </p>
+			<p>Email: <b>{{employee.email}}</b></p>
+            <p>Last Login: <b>{{employee.last_login}}</b></p>
+            <p>User Description: <b>{{"Employee"}}</b></p>
+		</div>
+	</div>
+
+    <div class="col-md">
+		<div class="card card-body">
+			<h5>Employee Log</h5>
+			<hr>
+            <p>Username: <b>{{employee.username}}</b></p>
+            <p>Name: <b>{{employee.first_name}} - {{employee.last_name}}</b> </p>
+			<p>Email: <b>{{employee.email}}</b></p>
+            <p>Last Login: <b>{{employee.last_login}}</b></p>
+            <p>User Description: <b>{{"Employee"}}</b></p>
+		</div>
+	</div>
+
+</div>
+
+    
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+<script>
+
+    function randomColorFun() {
+        return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+    }
+
+    var options = {
+        responsive: true,
+        maintainAspectRatio: true,
+        legend: {
+            position: 'left'
+        },
+        title: {
+            display: true
+        },
+        animation: {
+            animateScale: true,
+            animateRotate: true
+        }
+    };
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        
+        var clr_count = [{% for skill in skill_list %} randomColorFun(),{% endfor %}]
+
+        var color_list = []
+        
+        for(var i of clr_count) {
+            color_list.push(randomColorFun());
+        }
+
+        const myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [{% for skill in skill_list %}'{{ skill.skill }}',{% endfor %}],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [{% for skill in skill_list %}'{{ skill.percentage}}',{% endfor %}],
+                    backgroundColor: color_list,
+                    borderColor: color_list,
+                    borderWidth: 1
+                }]
+            },
+            options: options
+        });
+    });
+    
+</script>
+{% endblock %}
+
+

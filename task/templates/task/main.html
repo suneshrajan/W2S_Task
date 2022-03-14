@@ -10,14 +10,15 @@
 
     {% include 'task/navbar.html' %}
 
+    <div class="container-fluid">
+        {% block content %}
 
-    {% block content %}
 
+        {% endblock %}
+    </div>
 
-    {% endblock %}
-
-    <hr>
-    <h5> our footr</h5>
+    <!-- <hr>
+    <h5> our footr</h5> -->
 
 </body>
 

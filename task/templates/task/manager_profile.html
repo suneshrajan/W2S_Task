@@ -1,0 +1,19 @@
+{%  extends 'task/main.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <h5>Profile Information</h5>
+			<hr>
+            <p>Username: <b>{{manager.username}}</b> </p>
+			<p>Name: <b>{{manager.first_name}} - {{manager.last_name}}</b> </p>
+			<p>Email: <b>{{manager.email}}</b></p>
+            <a class="btn btn-sm btn-info" href="{% url 'update_employee' manager.id %}">update</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

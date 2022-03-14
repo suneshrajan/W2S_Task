@@ -2,39 +2,10 @@
 
 {% block content %}
 
-	<br>
-
-<div class="row">
-	<div class="col-md">
-		<div class="card card-body">
-			<h5>Employee:</h5>
-			<hr>
-			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Employee</a>
-			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Employee</a>
-
-		</div>
-	</div>
-
-	<div class="col-md">
-		<div class="card card-body">
-			<h5>Contact Information</h5>
-			<hr>
-			<p>Email: </p>
-			<p>Phone: </p>
-		</div>
-	</div>
-
-	<div class="col-md">
-		<div class="card card-body">
-			<h5>Total Orders</h5>
-			<hr>
-			<h1 style="text-align: center;padding: 10px"></h1>
-		</div>
-	</div>
-</div>
+{% include 'task/chart.html'%}
 
 
-<br>
+<!-- <br>
 <div class="row">
 	<div class="col">
 		<div class="card card-body">
@@ -45,23 +16,54 @@
 		</div>
 	</div>
 	
-</div>
+</div> -->
+
 <br>
 
-<div class="row">
-	<div class="col-md">
+<div class="row" style="padding: 1%;">
+	<div class="col-md-7">
 		<div class="card card-body">
+			<h5>Employee & Skills:</h5>
+			<br>
 			<table class="table table-sm">
 				<tr>
-					<th>Product</th>
-					<th>Category</th>
-					<th>Date Orderd</th>
-					<th>Status</th>
+					<th></th>
+					<th>Sl.No</th>
+					<th>Skill</th>
+					<th>Percentage</th>
 					<th>Update</th>
 					<th>Remove</th>
 				</tr>
 
+				{% for skill in skill_list %}
+					<tr>
+						<td></td>
+						<td>{{forloop.counter}}</td>
+						<td>{{skill.skill}}</td>
+						<td>{{skill.percentage}} % </td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'update_employee_skill' skill.skill_id %}"> Update </a></td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_employee_skill' skill.skill_id %}"> Remove </a></td>
+					</tr>
+				{% endfor%}
+
 			</table>
+		</div>
+	</div>
+	<div class="col-md-5">
+		<div class="row">
+			<div class="col-md">
+				<div class="card card-body">
+					<h5>Employee:</h5>
+					<hr>
+					{% if group_name == 'Employee' %}
+					<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'update_employee' employee.id %}">Update Profile</a>
+					{% endif %}
+					{% if group_name != 'Employee' %}
+						<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'update_employee' employee.id %}">Update Employee</a>
+						<a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'delete_employee' employee.id %}">Delete Employee</a>
+					{% endif %}
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
