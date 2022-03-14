@@ -135,5 +135,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/images/'
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
-
-LOGIN_REDIRECT_URL = '/whatever/page/'
