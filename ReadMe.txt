@@ -3,6 +3,7 @@
 Manager login: 
     username: manager,
     password: superior@123
+    
 Employee login:
     username: emp,
     password: subordinate@123
