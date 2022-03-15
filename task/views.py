@@ -105,6 +105,9 @@ def employee(request, user_id):
 
 @login_required(login_url='login')
 def create_skills(request):
+	group_name = User.objects.filter(id=request.user.id).values_list('groups__name',flat=True)[0]
+	if group_name == 'Employee':
+		return HttpResponse("You don't have acces to continue !!!")
 	form = SkillsForm()
 	if request.method == 'POST':
 		form = SkillsForm(request.POST)
@@ -128,6 +131,9 @@ def create_skills(request):
 
 @login_required(login_url='login')
 def update_skills(request, skill_id):
+	group_name = User.objects.filter(id=request.user.id).values_list('groups__name',flat=True)[0]
+	if group_name == 'Employee':
+		return HttpResponse("You don't have acces to continue !!!")
 	skill_obj = SkillCv.objects.get(id=skill_id)
 	form = SkillsForm(instance=skill_obj)
 
@@ -144,6 +150,10 @@ def update_skills(request, skill_id):
 
 @login_required(login_url='login')
 def delete_skills(request, skill_id):
+	group_name = User.objects.filter(id=request.user.id).values_list('groups__name',flat=True)[0]
+	if group_name == 'Employee':
+		return HttpResponse("You don't have acces to continue !!!")
+
 	skill_obj = SkillCv.objects.get(id=skill_id)
 
 	if request.method == 'POST':
@@ -156,6 +166,9 @@ def delete_skills(request, skill_id):
 
 @login_required(login_url='login')
 def create_employee(request):
+	group_name = User.objects.filter(id=request.user.id).values_list('groups__name',flat=True)[0]
+	if group_name == 'Employee':
+		return HttpResponse("You don't have acces to continue !!!")
 	form = UserForm()
 	if request.method == 'POST':
 		form = UserForm(request.POST)
@@ -204,6 +217,10 @@ def update_employee(request, user_id):
 
 @login_required(login_url='login')
 def delete_employee(request, user_id):
+	group_name = User.objects.filter(id=request.user.id).values_list('groups__name',flat=True)[0]
+	if group_name == 'Employee':
+		return HttpResponse("You don't have acces to continue !!!")
+		
 	user_obj = User.objects.get(id=user_id)
 
 	if request.method == 'POST':
